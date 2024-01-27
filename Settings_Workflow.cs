@@ -12,6 +12,7 @@ namespace ActDashboard
         private const string strTag = "[workflow]";
         private const string strTag2 = "[notes]";
         private const string strTag3 = "[duration]";
+        private const string strTag4 = "[date]";
         public string? Containers {  get; set; }
         public string? Networks { get; set; }
         public string? RunOnGitBranch {  get; set; }
@@ -20,8 +21,9 @@ namespace ActDashboard
         private string? strSettingsFilePath;
 
         public Dictionary<string,string> dictNotes = new Dictionary<string,string>();
-
+        public Dictionary<string, string> dictDate = new Dictionary<string, string>();
         public Dictionary<string, string> dictDuration = new Dictionary<string, string>();
+        
 
         public void Load(string strPath, string strFileName)
         {
@@ -30,6 +32,11 @@ namespace ActDashboard
             Networks = "";
             RunOnGitBranch = "";
             KillObjectsBeforeRunning = true;
+
+            // Empty Dictionaries
+            dictNotes.Clear();
+            dictDate.Clear();
+            dictDuration.Clear();
 
             // Create folder where settings goes if it does not already exist.
             if (!Directory.Exists(strPath))
@@ -95,12 +102,28 @@ namespace ActDashboard
                             }
                         }
                     }
+
+                }
+
+                // Added this
+                for (int iNextValue = 1; iNextValue < 1000; iNextValue++)
+                {
+                    string strInputName = $"{iNextValue:0000}_Input.yml";
+                    string strOutputName = $"{iNextValue:0000}_Output.txt";
+
+                    string strInputFilePath = $"{strPath}\\{strInputName}";
+                    string strOutputFilePath = $"{strPath}\\{strOutputName}";
+                    if (File.Exists(strInputFilePath) && File.Exists(strOutputFilePath)) 
+                    {
+                        dictDate.Add(strInputName, File.GetCreationTime(strInputFilePath).ToString());
+                    }
                 }
             }
             else
             {
                 Save();
             }
+
         }
 
         public void Save()
@@ -127,6 +150,12 @@ namespace ActDashboard
                 {
                     sb.AppendLine($"{n.Key}={n.Value}");
                 }
+                
+                // sb.AppendLine(strTag4);
+                // foreach (KeyValuePair<string, string> n in dictDate)
+                // {
+                //     sb.AppendLine($"{n.Key}={n.Value}");
+                // }
 
                 try
                 {

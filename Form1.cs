@@ -19,6 +19,8 @@ namespace WinFormsApp1
         private const int datacolumn_output = 1;
         private const int datacolumn_duration = 2;
         private const int datacolumn_notes = 3;
+        private const int datacolumn_date = 4;
+
         #endregion
         #region Fields and Properties
         bool bIgnoreChangeNotification = false;
@@ -140,8 +142,12 @@ namespace WinFormsApp1
                 string strDuration = "";
                 if (workflowsettings.dictDuration.ContainsKey(strInput))
                     strDuration = workflowsettings.dictDuration[strInput];
+                
+                string strDate = "";
+                if (workflowsettings.dictDate.ContainsKey(strInput))
+                    strDate = workflowsettings.dictDate[strInput];
 
-                gridFiles.Rows.Add(strInput, strOutput, strDuration, strNote);
+                gridFiles.Rows.Add(strInput, strOutput, strDuration, strDate, strNote);
             }
 
             int iRow = OpenFilesForLastCompleteRow();
@@ -494,7 +500,7 @@ namespace WinFormsApp1
 
         private void gridFiles_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.ColumnIndex == 2)
+            if (e.ColumnIndex == 3)
             {
                 System.Diagnostics.Debug.WriteLine("Cell-Value-Changed\r\n");
                 int iRow = e.RowIndex;
@@ -506,16 +512,17 @@ namespace WinFormsApp1
                     {
                         DataGridViewRow datarow = gridFiles.Rows[iRow];
                         string strKey = (datarow.Cells[0].Value == null) ? "" : datarow.Cells[0].Value.ToString();
-                        string strNotes = (datarow.Cells[2].Value == null) ? "" : datarow.Cells[2].Value.ToString();
+                        string strNotes = (datarow.Cells[3].Value == null) ? "" : datarow.Cells[3].Value.ToString();
                         if (strKey.Length > 0)
                         {
                             if (workflowsettings.dictNotes.ContainsKey(strKey))
                             {
-                                workflowsettings.dictNotes.Add(strKey, strNotes);
+                                
+                                workflowsettings.dictNotes[strKey] = strNotes;
                             }
                             else
                             {
-                                workflowsettings.dictNotes[strKey] = strNotes;
+                                workflowsettings.dictNotes.Add(strKey, strNotes);
                             }
 
                             workflowsettings.Save();

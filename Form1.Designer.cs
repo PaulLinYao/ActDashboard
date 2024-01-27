@@ -55,6 +55,7 @@
             Input = new DataGridViewTextBoxColumn();
             Output = new DataGridViewTextBoxColumn();
             Duration = new DataGridViewTextBoxColumn();
+            Date = new DataGridViewTextBoxColumn();
             Notes = new DataGridViewTextBoxColumn();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)gridFiles).BeginInit();
@@ -83,7 +84,7 @@
             // 
             gridFiles.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             gridFiles.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            gridFiles.Columns.AddRange(new DataGridViewColumn[] { Input, Output, Duration, Notes });
+            gridFiles.Columns.AddRange(new DataGridViewColumn[] { Input, Output, Duration, Date, Notes });
             gridFiles.Location = new Point(6, 22);
             gridFiles.Name = "gridFiles";
             gridFiles.RowTemplate.Height = 25;
@@ -381,6 +382,12 @@
             Notes.HeaderText = "Notes";
             Notes.Name = "Notes";
             Notes.Width = 500;
+            //
+            // Date
+            //
+            Date.HeaderText = "Date";
+            Date.Name = "Date";
+            Date.ReadOnly = true;
             // 
             // Form1
             // 
@@ -441,6 +448,8 @@
         private DataGridViewTextBoxColumn Input;
         private DataGridViewTextBoxColumn Output;
         private DataGridViewTextBoxColumn Duration;
+        private DataGridViewTextBoxColumn Date;
         private DataGridViewTextBoxColumn Notes;
+
     }
 }
