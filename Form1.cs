@@ -18,8 +18,9 @@ namespace WinFormsApp1
         private const int datacolumn_input = 0;
         private const int datacolumn_output = 1;
         private const int datacolumn_duration = 2;
-        private const int datacolumn_notes = 3;
-        private const int datacolumn_date = 4;
+        private const int datacolumn_date = 3;
+        private const int datacolumn_notes = 4;
+
 
         #endregion
         #region Fields and Properties
@@ -500,7 +501,7 @@ namespace WinFormsApp1
 
         private void gridFiles_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.ColumnIndex == 3)
+            if (e.ColumnIndex == datacolumn_notes)
             {
                 System.Diagnostics.Debug.WriteLine("Cell-Value-Changed\r\n");
                 int iRow = e.RowIndex;
@@ -511,8 +512,8 @@ namespace WinFormsApp1
                     if (iRow >= 0)
                     {
                         DataGridViewRow datarow = gridFiles.Rows[iRow];
-                        string strKey = (datarow.Cells[0].Value == null) ? "" : datarow.Cells[0].Value.ToString();
-                        string strNotes = (datarow.Cells[3].Value == null) ? "" : datarow.Cells[3].Value.ToString();
+                        string strKey = (datarow.Cells[datacolumn_input].Value == null) ? "" : datarow.Cells[datacolumn_input].Value.ToString();
+                        string strNotes = (datarow.Cells[datacolumn_notes].Value == null) ? "" : datarow.Cells[datacolumn_notes].Value.ToString();
                         if (strKey.Length > 0)
                         {
                             if (workflowsettings.dictNotes.ContainsKey(strKey))
