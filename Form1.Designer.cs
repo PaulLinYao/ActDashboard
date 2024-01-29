@@ -30,6 +30,11 @@
         {
             groupBox1 = new GroupBox();
             gridFiles = new DataGridView();
+            Input = new DataGridViewTextBoxColumn();
+            Output = new DataGridViewTextBoxColumn();
+            Duration = new DataGridViewTextBoxColumn();
+            Date = new DataGridViewTextBoxColumn();
+            Notes = new DataGridViewTextBoxColumn();
             checkWordWrap = new CheckBox();
             cmdRefresh = new LinkLabel();
             cmdSetFolder = new LinkLabel();
@@ -37,7 +42,7 @@
             label1 = new Label();
             groupBox2 = new GroupBox();
             splitcontainer = new SplitContainer();
-            treeView1 = new TreeView();
+            listSteps = new ListBox();
             rtDisplay = new RichTextBox();
             tableLayoutPanel1 = new TableLayoutPanel();
             label2 = new Label();
@@ -52,11 +57,6 @@
             comboWorkflows = new ComboBox();
             textConsole = new TextBox();
             cmdStartStop = new Button();
-            Input = new DataGridViewTextBoxColumn();
-            Output = new DataGridViewTextBoxColumn();
-            Duration = new DataGridViewTextBoxColumn();
-            Date = new DataGridViewTextBoxColumn();
-            Notes = new DataGridViewTextBoxColumn();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)gridFiles).BeginInit();
             groupBox2.SuspendLayout();
@@ -92,6 +92,36 @@
             gridFiles.TabIndex = 3;
             gridFiles.CellValueChanged += gridFiles_CellValueChanged;
             gridFiles.RowHeaderMouseClick += gridFiles_RowHeaderMouseClick;
+            // 
+            // Input
+            // 
+            Input.HeaderText = "Input";
+            Input.Name = "Input";
+            Input.ReadOnly = true;
+            // 
+            // Output
+            // 
+            Output.HeaderText = "Output";
+            Output.Name = "Output";
+            Output.ReadOnly = true;
+            // 
+            // Duration
+            // 
+            Duration.HeaderText = "Duration";
+            Duration.Name = "Duration";
+            Duration.ReadOnly = true;
+            // 
+            // Date
+            // 
+            Date.HeaderText = "Date";
+            Date.Name = "Date";
+            Date.ReadOnly = true;
+            // 
+            // Notes
+            // 
+            Notes.HeaderText = "Notes";
+            Notes.Name = "Notes";
+            Notes.Width = 500;
             // 
             // checkWordWrap
             // 
@@ -169,7 +199,7 @@
             // splitcontainer.Panel1
             // 
             splitcontainer.Panel1.BackColor = SystemColors.Window;
-            splitcontainer.Panel1.Controls.Add(treeView1);
+            splitcontainer.Panel1.Controls.Add(listSteps);
             // 
             // splitcontainer.Panel2
             // 
@@ -180,13 +210,15 @@
             splitcontainer.SplitterWidth = 8;
             splitcontainer.TabIndex = 6;
             // 
-            // treeView1
+            // listSteps
             // 
-            treeView1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            treeView1.Location = new Point(0, 0);
-            treeView1.Name = "treeView1";
-            treeView1.Size = new Size(244, 520);
-            treeView1.TabIndex = 0;
+            listSteps.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            listSteps.FormattingEnabled = true;
+            listSteps.ItemHeight = 15;
+            listSteps.Location = new Point(0, 3);
+            listSteps.Name = "listSteps";
+            listSteps.Size = new Size(236, 514);
+            listSteps.TabIndex = 0;
             // 
             // rtDisplay
             // 
@@ -195,7 +227,7 @@
             rtDisplay.Font = new Font("Lucida Console", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             rtDisplay.Location = new Point(0, 0);
             rtDisplay.Name = "rtDisplay";
-            rtDisplay.Size = new Size(965, 520);
+            rtDisplay.Size = new Size(957, 520);
             rtDisplay.TabIndex = 0;
             rtDisplay.Text = "";
             rtDisplay.WordWrap = false;
@@ -359,36 +391,6 @@
             cmdStartStop.UseVisualStyleBackColor = false;
             cmdStartStop.Click += cmdStartStop_Click;
             // 
-            // Input
-            // 
-            Input.HeaderText = "Input";
-            Input.Name = "Input";
-            Input.ReadOnly = true;
-            // 
-            // Output
-            // 
-            Output.HeaderText = "Output";
-            Output.Name = "Output";
-            Output.ReadOnly = true;
-            // 
-            // Duration
-            // 
-            Duration.HeaderText = "Duration";
-            Duration.Name = "Duration";
-            Duration.ReadOnly = true;
-            // 
-            // Notes
-            // 
-            Notes.HeaderText = "Notes";
-            Notes.Name = "Notes";
-            Notes.Width = 500;
-            //
-            // Date
-            //
-            Date.HeaderText = "Date";
-            Date.Name = "Date";
-            Date.ReadOnly = true;
-            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -444,12 +446,11 @@
         private TextBox textConsole;
         private LinkLabel cmdClearConsole;
         private SplitContainer splitcontainer;
-        private TreeView treeView1;
         private DataGridViewTextBoxColumn Input;
         private DataGridViewTextBoxColumn Output;
         private DataGridViewTextBoxColumn Duration;
         private DataGridViewTextBoxColumn Date;
         private DataGridViewTextBoxColumn Notes;
-
+        private ListBox listSteps;
     }
 }
