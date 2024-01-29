@@ -12,7 +12,7 @@ using static System.Windows.Forms.LinkLabel;
 #pragma warning disable CS8600, CS8602, CS8604, CS8605
 namespace WinFormsApp1
 {
-    public partial class Form1 : Form
+    public partial class Form_Main : Form
     {
         #region Constants
         private const int datacolumn_input = 0;
@@ -44,6 +44,7 @@ namespace WinFormsApp1
         public string? strCurrentWorkflowFile
         { get; set; }
 
+        // Like this: "C:\\CESMII.github\\Marketplace"
         public string? strPathToWorkflows
         {
             get
@@ -52,6 +53,7 @@ namespace WinFormsApp1
             }
         }
 
+        // Like this: "C:\CESMII.github\Marketplace\act"
         public string? strPathToAct
         {
             get
@@ -75,7 +77,7 @@ namespace WinFormsApp1
 
         #endregion
 
-        public Form1()
+        public Form_Main()
         {
             InitializeComponent();
 
@@ -400,11 +402,11 @@ namespace WinFormsApp1
             // Set the help text description for the FolderBrowserDialog.
             dialog.Description = "Select the directory with Github Action input and output files.";
 
-
             DialogResult dr = dialog.ShowDialog();
             if (dr == DialogResult.OK)
             {
                 textFolder.Text = dialog.SelectedPath;
+                OnReposChangeInitWorkflowList();
                 cmdRefresh_LinkClicked(this, new LinkLabelLinkClickedEventArgs(new Link()));
             }
         }
