@@ -274,9 +274,9 @@ namespace ActDashboard
             for (; iOutput < output.iFileHeaderLastLine; iOutput++)
                 sb.AppendLine($"\t\t{astrOutput[iOutput]}");
 
-            sb.AppendLine($"");
+            sb.AppendLine($".");
             sb.AppendLine($"------------------------------------------------------------------------------------");
-            sb.AppendLine($"");
+            sb.AppendLine($".");
             // Loop through lines, merging input with output
             for (int iBlock = 0; iBlock < lines.Length; iBlock++)
             {
@@ -294,12 +294,20 @@ namespace ActDashboard
                 {
                     sb.AppendLine($"\t\t********* No Output for this step. *********");
                 }
-                sb.AppendLine($"");
+                sb.AppendLine($".");
                 sb.AppendLine($"------------------------------------------------------------------------------------");
-                sb.AppendLine($"");
+                sb.AppendLine($".");
             }
 
-            return sb;
+            string strTemp = sb.ToString();
+            string[] astrLines = strTemp.Split(new char[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
+            StringBuilder sbTemp = new StringBuilder();
+            for (int iLine = 0; iLine < astrLines.Length; iLine++)
+            {
+                sbTemp.AppendLine($"{iLine:0000}  {astrLines[iLine]}");
+            }
+
+            return sbTemp;
         }
 
 
