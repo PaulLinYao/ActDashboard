@@ -260,11 +260,13 @@ namespace ActDashboard
             }
         }
 
-        public static StringBuilder MergeFiles(InputFile input, string[] astrInput, OutputFile output, string[] astrOutput, InputOutputFileLines[] lines)
+        public static (StringBuilder sb, int[] lineCounts) MergeFiles(InputFile input, string[] astrInput, OutputFile output, string[] astrOutput, InputOutputFileLines[] lines)
         {
             StringBuilder sb = new StringBuilder();
+            int[] lineCounts = new int[lines.Length];
             int iInput = 0;
             int iOutput = 0;
+            int lineCount = 0;
 
             // Write input file header
             for (; iInput <= input.iSteps; iInput++)
@@ -277,9 +279,11 @@ namespace ActDashboard
             sb.AppendLine($"");
             sb.AppendLine($"------------------------------------------------------------------------------------");
             sb.AppendLine($"");
+            lineCount += 3;
             // Loop through lines, merging input with output
             for (int iBlock = 0; iBlock < lines.Length; iBlock++)
             {
+                int blockLineCount = 0;
                 // Dump input block
                 for (iInput = lines[iBlock].iInputFirst; iInput <= lines[iBlock].iInputLast; iInput++)
                     sb.AppendLine(astrInput[iInput]);
@@ -293,13 +297,19 @@ namespace ActDashboard
                 else
                 {
                     sb.AppendLine($"\t\t********* No Output for this step. *********");
+                    blockLineCount++;
                 }
                 sb.AppendLine($"");
                 sb.AppendLine($"------------------------------------------------------------------------------------");
                 sb.AppendLine($"");
+                
+                blockLineCount += 3;
+                lineCounts[iBlock] = blockLineCount;
+                lineCount += blockLineCount;
+
             }
 
-            return sb;
+            return (sb, lineCounts);
         }
 
 

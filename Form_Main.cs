@@ -90,7 +90,7 @@ namespace WinFormsApp1
                     iFirstLine += blockCount[i];
                 }
                 int iLastLine = iFirstLine + blockCount[iItem] - 1;
-                int iSelectLine = rtDisplay.GetFirstCharIndexFromLine(iFirstLine);
+                int iSelectLine = rtDisplay.GetFirstCharIndexFromLine(iLastLine);
                 rtDisplay.Select(iSelectLine, 0);
                 rtDisplay.ScrollToCaret();
             }
@@ -375,7 +375,7 @@ namespace WinFormsApp1
             {
 
                 Parser.MatchToOutputBlocks(astrInput, output, astrOutput, lines);
-                StringBuilder sb = Parser.MergeFiles(input, astrInput, output, astrOutput, lines);
+                var(sb, lineCounts) = Parser.MergeFiles(input, astrInput, output, astrOutput, lines);
 
                 rtDisplay.Text = sb.ToString();
 
@@ -387,7 +387,8 @@ namespace WinFormsApp1
                 for (int i = 0; i < lines.Length; i++)
                 {
                     listSteps.Items.Add(lines[i].strInputName);
-                    blockCount[i] = lines[i].iInputLast - lines[i].iInputFirst + 1 + lines[i].iOutputLast - lines[i].iOutputFirst + 1;
+                    // blockCount[i] = lineCounts[i];
+                    blockCount[i] = lineCounts[i] + lines[i].iInputLast - lines[i].iInputFirst + 1 + lines[i].iOutputLast - lines[i].iOutputFirst + 1;
                 }
 
                 // How to display color!!
