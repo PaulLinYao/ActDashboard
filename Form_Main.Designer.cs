@@ -164,7 +164,6 @@
             textFolder.Name = "textFolder";
             textFolder.Size = new Size(275, 23);
             textFolder.TabIndex = 1;
-            textFolder.Text = "C:\\CESMII.github\\Marketplace";
             textFolder.TextChanged += textFolder_TextChanged;
             // 
             // label1
@@ -227,7 +226,7 @@
             rtDisplay.Font = new Font("Lucida Console", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             rtDisplay.Location = new Point(0, 0);
             rtDisplay.Name = "rtDisplay";
-            rtDisplay.Size = new Size(957, 520);
+            rtDisplay.Size = new Size(953, 520);
             rtDisplay.TabIndex = 0;
             rtDisplay.Text = "";
             rtDisplay.WordWrap = false;
@@ -391,7 +390,7 @@
             cmdStartStop.UseVisualStyleBackColor = false;
             cmdStartStop.Click += cmdStartStop_Click;
             // 
-            // Form1
+            // Form_Main
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -401,7 +400,7 @@
             Controls.Add(groupBox1);
             MaximizeBox = false;
             MinimizeBox = false;
-            Name = "Form1";
+            Name = "Form_Main";
             Text = "ACT Dashboard";
             Shown += Form1_Shown;
             groupBox1.ResumeLayout(false);
