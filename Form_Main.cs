@@ -29,6 +29,8 @@ namespace WinFormsApp1
         public Settings_Workflow workflowsettings = new Settings_Workflow();
         private int iSelectedRow = -1;
 
+        private int []blockCount ;
+
         public string? strPathToRepos
         {
             get
@@ -76,10 +78,29 @@ namespace WinFormsApp1
         }
 
         #endregion
+        private void listSteps_Click(object sender, EventArgs e)
+        {
+            int iItem = listSteps.SelectedIndex;
+            // Scroll the file to the selected line.
+            if (iItem > -1)
+            {
+                int iFirstLine = 0;
+                for (int i = 0; i < iItem; i++)
+                {
+                    iFirstLine += blockCount[i];
+                }
+                int iLastLine = iFirstLine + blockCount[iItem] - 1;
+                int iSelectLine = rtDisplay.GetFirstCharIndexFromLine(iFirstLine);
+                rtDisplay.Select(iSelectLine, 0);
+                rtDisplay.ScrollToCaret();
+            }
+        }
 
         public Form_Main()
         {
             InitializeComponent();
+            listSteps.Click += new EventHandler(listSteps_Click);
+            
 
             // At start, open the last repo we had opened.
             string strTemp = Settings1.Default.FolderPath;
@@ -313,6 +334,7 @@ namespace WinFormsApp1
 
         private void DisplayDetailsForRow(int iRow)
         {
+            listSteps.Items.Clear();
             string strFolder = strPathToRepos; // textFolder.Text;
             string strInput = gridFiles.Rows[iRow].Cells[datacolumn_input].Value.ToString();
             string strOutput = gridFiles.Rows[iRow].Cells[datacolumn_output].Value.ToString();
@@ -324,6 +346,7 @@ namespace WinFormsApp1
             textInputFile.Text = "";
             textOutputFile.Text = "";
 
+            // If the File does not exist, raise an error
             if (!File.Exists(strInputPath))
             {
                 MessageBox.Show($"Input File Not Found.\r\n\r\nFile {strInput} not found.\r\n\r\nExpected in folder {strPathToOutput}.", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -350,10 +373,22 @@ namespace WinFormsApp1
             bool bOk = ValidateInputFileLines(input, astrInput);
             if (bOk)
             {
+
                 Parser.MatchToOutputBlocks(astrInput, output, astrOutput, lines);
                 StringBuilder sb = Parser.MergeFiles(input, astrInput, output, astrOutput, lines);
 
                 rtDisplay.Text = sb.ToString();
+
+                blockCount = new int[lines.Length];
+                // Add line names to the list
+                // foreach (InputOutputFileLines item in lines) {
+                //     listSteps.Items.Add(item.strInputName);
+                // }
+                for (int i = 0; i < lines.Length; i++)
+                {
+                    listSteps.Items.Add(lines[i].strInputName);
+                    blockCount[i] = lines[i].iInputLast - lines[i].iInputFirst + 1 + lines[i].iOutputLast - lines[i].iOutputFirst + 1;
+                }
 
                 // How to display color!!
                 //rtDisplay.Text = "";
