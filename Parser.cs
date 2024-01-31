@@ -276,9 +276,9 @@ namespace ActDashboard
             for (; iOutput < output.iFileHeaderLastLine; iOutput++)
                 sb.AppendLine($"\t\t{astrOutput[iOutput]}");
 
-            sb.AppendLine($"");
+            sb.AppendLine($"_");
             sb.AppendLine($"------------------------------------------------------------------------------------");
-            sb.AppendLine($"");
+            sb.AppendLine($"_");
             lineCount += 3;
             // Loop through lines, merging input with output
             for (int iBlock = 0; iBlock < lines.Length; iBlock++)
@@ -287,29 +287,38 @@ namespace ActDashboard
                 // Dump input block
                 for (iInput = lines[iBlock].iInputFirst; iInput <= lines[iBlock].iInputLast; iInput++)
                     sb.AppendLine(astrInput[iInput]);
+                    blockLineCount++;
 
                 // Dump corresponding output block
                 if (lines[iBlock].bHasOutput)
                 {
                     for (iOutput = lines[iBlock].iOutputFirst; iOutput <= lines[iBlock].iOutputLast; iOutput++)
                         sb.AppendLine($"\t\t{astrOutput[iOutput]}");
+                        blockLineCount++;
                 }
                 else
                 {
                     sb.AppendLine($"\t\t********* No Output for this step. *********");
                     blockLineCount++;
                 }
-                sb.AppendLine($"");
+                sb.AppendLine($"_");
                 sb.AppendLine($"------------------------------------------------------------------------------------");
-                sb.AppendLine($"");
+                sb.AppendLine($"_");
                 
                 blockLineCount += 3;
                 lineCounts[iBlock] = blockLineCount;
                 lineCount += blockLineCount;
 
             }
+            string strTemp = sb.ToString();
+            string[] astrLines = strTemp.Split(new char[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
+            StringBuilder sbTemp = new StringBuilder();
+            for (int iLine = 0; iLine < astrLines.Length; iLine++)
+            {
+                sbTemp.AppendLine($"{iLine:0000}  {astrLines[iLine]}");
+            }
 
-            return (sb, lineCounts);
+            return (sbTemp, lineCounts);
         }
 
 

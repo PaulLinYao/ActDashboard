@@ -89,8 +89,9 @@ namespace WinFormsApp1
                 {
                     iFirstLine += blockCount[i];
                 }
-                int iLastLine = iFirstLine + blockCount[iItem] - 1;
+                int iLastLine = iFirstLine; //+ blockCount[iItem] - 1;
                 int iSelectLine = rtDisplay.GetFirstCharIndexFromLine(iLastLine);
+                utils.WriteToTextBox(textConsole, $"listSteps_Click - jumping to line: {iFirstLine}.");
                 rtDisplay.Select(iSelectLine, 0);
                 rtDisplay.ScrollToCaret();
             }
