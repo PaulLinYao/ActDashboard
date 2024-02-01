@@ -269,45 +269,59 @@ namespace ActDashboard
             int lineCount = 0;
 
             // Write input file header
-            for (; iInput <= input.iSteps; iInput++)
+            for (; iInput <= input.iSteps; iInput++) {
                 sb.AppendLine(astrInput[iInput]);
+                lineCount++;
+            }
+
 
             // Write output file header
-            for (; iOutput < output.iFileHeaderLastLine; iOutput++)
-                sb.AppendLine($"\t\t{astrOutput[iOutput]}");
+            for (; iOutput < output.iFileHeaderLastLine; iOutput++) {
+                sb.AppendLine($"\t\t{astrOutput[iOutput]}"); 
+                lineCount++;   
+            }
 
-            sb.AppendLine($"_");
-            sb.AppendLine($"------------------------------------------------------------------------------------");
-            sb.AppendLine($"_");
-            lineCount += 3;
+
+            // sb.AppendLine($"_");
+            // sb.AppendLine($"------------------------------------------------------------------------------------");
+            // sb.AppendLine($"_");
+            // lineCount += 3;
             // Loop through lines, merging input with output
             for (int iBlock = 0; iBlock < lines.Length; iBlock++)
             {
                 int blockLineCount = 0;
+                if (iBlock == 0) {
+                    blockLineCount += lineCount;
+                }
+                 
                 // Dump input block
-                for (iInput = lines[iBlock].iInputFirst; iInput <= lines[iBlock].iInputLast; iInput++)
+                for (iInput = lines[iBlock].iInputFirst; iInput <= lines[iBlock].iInputLast; iInput++) {
                     sb.AppendLine(astrInput[iInput]);
-                    blockLineCount++;
+                    // blockLineCount++; // This is a duplicate line count.
+                }
 
+ 
                 // Dump corresponding output block
                 if (lines[iBlock].bHasOutput)
                 {
-                    for (iOutput = lines[iBlock].iOutputFirst; iOutput <= lines[iBlock].iOutputLast; iOutput++)
+                    for (iOutput = lines[iBlock].iOutputFirst; iOutput <= lines[iBlock].iOutputLast; iOutput++) {
                         sb.AppendLine($"\t\t{astrOutput[iOutput]}");
-                        blockLineCount++;
+                        // blockLineCount++; // This is a duplicate line count.
+                    }
+
                 }
                 else
                 {
-                    sb.AppendLine($"\t\t********* No Output for this step. *********");
-                    blockLineCount++;
+                    // sb.AppendLine($"\t\t********* No Output for this step. *********");
+                    // blockLineCount++;
                 }
-                sb.AppendLine($"_");
-                sb.AppendLine($"------------------------------------------------------------------------------------");
-                sb.AppendLine($"_");
-                
-                blockLineCount += 3;
+                // sb.AppendLine($"_");
+                // sb.AppendLine($"------------------------------------------------------------------------------------");
+                // sb.AppendLine($"_");
+                // blockLineCount += 3;
+
                 lineCounts[iBlock] = blockLineCount;
-                lineCount += blockLineCount;
+                // lineCount += blockLineCount;
 
             }
             string strTemp = sb.ToString();
